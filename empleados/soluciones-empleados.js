@@ -226,7 +226,7 @@ const empleadosQueSabenLenguajes = (arrayLenguajes) => {
     return filtrarEmpleados
 }
 */
-console.log(empleadosQueSabenLenguajes(['Ruby', 'C#', 'Java', 'Python', 'PHP']))
+console.log(empleadosQueSabenLenguajes(["C#"]))
 // empleadesQueSabenAlgunosLenguajes, que tome por parámetro un array de lenguajes y devuelva un array con aquelles empleades que sepan al menos uno de esos lenguajes
 
 // empleadesConMejorSueldo, que devuelva un array con los 10 mejores empleades pagos (investigar metodo sort)
@@ -253,10 +253,32 @@ console.log(obtenerTitulosCompletos(empleados))
 // nombre
 // pais
 // edad habiendo un elemento por cada empleade, y donde cada propiedad se corresponde a la propiedad del objeto original (usar map)
+const obtenerInfoPersonal = () =>{
+    const infoPersonal = empleados.map(({nombre, pais, edad})=> {return {nombre, pais, edad}
+})
+    return infoPersonal
+}
 
+console.log(obtenerInfoPersonal(empleados))
 
+/*
+const obtenerInfoPersonal = () =>{
+    const infoPersonal = empleados.map(({nombre, pais, edad})=> {return {nombre, pais, edad}
+})
+    return infoPersonal
+}
+
+console.log(obtenerInfoPersonal(empleados))
+*/
 // obtenerInfoPuestos, que devuelva un array donde cada elemento es un objeto con las propiedades
 
+const obtenerInfoPuestos = () => {
+    const infoPuestos = empleados.map(({ nombre, area, puesto, seniority }) =>{
+        return { nombre, area, puesto, seniority }
+    })
+    return infoPuestos
+}
+console.log(obtenerInfoPuestos(empleados))
 // nombre
 // area
 // puesto
@@ -264,6 +286,11 @@ console.log(obtenerTitulosCompletos(empleados))
 
 
 // obtenerInfoSeniority, que devuelva un array donde cada elemento es un objeto con las propiedades
+const obtenerInfoSeniority = () => empleados.map(({nombre, seniority, sueldo}) => {return {nombre, seniority, sueldo}
+})
+console.log(obtenerInfoSeniority(empleados))
+
+/*
 const obtenerInfoSeniority = () => {
     const infoSeniority = empleados.map(({nombre, seniority, sueldo}) => {
         return {nombre:`${nombre}`, seniority:`${seniority}`, sueldo:`${sueldo}`}
@@ -271,6 +298,7 @@ const obtenerInfoSeniority = () => {
     return infoSeniority
 }
 console.log(obtenerInfoSeniority(empleados))
+*/
 // nombre
 // seniority
 // sueldo
@@ -278,12 +306,37 @@ console.log(obtenerInfoSeniority(empleados))
 
 // cantidadLenguajes habiendo un elemento por cada empleade, y donde cada propiedad se corresponde a la propiedad del objeto original, eecepto cantidadLenguajes, que es un número indicando la cantidad de lenguajes que sabe (usar map)
 const cantidadLenguajes = () => {
-    const numeroDeLenguajes = empleados.map (({ nombre, lenguajes })=> {
-        return `${nombre}, ${lenguajes.length}`
+    const lenguajesDeEmpleados = empleados.map( empleado =>{
+          
+        return {
+            ... empleado, 
+            cantidadLenguajes: empleado.lenguajes.length 
+        }
+    
+    })
+    return lenguajesDeEmpleados
+  
+}
+console.log(cantidadLenguajes(empleados))
+/*
+const cantidadLenguajes = () => {
+    const numeroDeLenguajes = empleados.map (({lenguajes })=> {
+        let cantidadLenguajesQueSabe = 0
+        for (const lenguaje of lenguajes){
+            cantidadLenguajesQueSabe = lenguaje.length
+            console.log(lenguaje)
+            return {
+                ... empleados, 
+                cantidadLenguajes: cantidadLenguajesQueSabe 
+            }
+        
+        }
+        
     })
     return numeroDeLenguajes
 }
-console.log(cantidadLenguajes(empleados))
+*/
+
 // obtenerInfoPagos, que devuelva una array donde cada elemento es un objeto con las propiedades
 const obtenerInfoPagos = () => {
     const pagos = empleados.map(({nombre, sueldo}) => {
@@ -307,9 +360,74 @@ console.log(obtenerInfoPagos(empleados))
 
 // obtenerEstadisticasSeniority que devuelva un objeto donde cada propiedad es un seniority y el valor la cantidad de empleades con dicho seniority
 const obtenerEstadisticasSeniority = () => {
-     const estadisticasSeniority = empleados.map(({señority}) => {
-
-     })
+     const estadisticasSeniority = {}
+     for (const empleado of empleados){
+        const { seniority } = empleado;
+        estadisticasSeniority[seniority] = empleados.filter(({ seniority }) => seniority === empleado.seniority).length
+    }
+    return estadisticasSeniority
 }
-
+console.log(obtenerEstadisticasSeniority(empleados))
 // obtenerEstadisticasLenguajes que devuelva un objeto donde cada propiedad es un lenguaje y el valor la cantidad de empleades que saben dicho lenguaje
+
+const obtenerEstadisticasLenguajes = () => {
+    const estadisticasLenguajes = {}
+    let accC = 0
+    let java = 0
+    let  python = 0
+    let javaScript = 0
+    let php = 0 
+    let ruby = 0
+    for (const empleado of empleados){
+        const { lenguajes } = empleado;
+        for (const unLenguaje of lenguajes){
+            console.log(unLenguaje)
+            if( unLenguaje === "C#"){
+                accC += 1
+                estadisticasLenguajes[unLenguaje] = accC
+            }
+            if( unLenguaje === "Java"){
+                java += 1
+                estadisticasLenguajes[unLenguaje] = java
+            }
+            if( unLenguaje === "Python"){
+                python += 1
+                estadisticasLenguajes[unLenguaje] = python
+            }
+             if( unLenguaje === "JavaScript"){
+                javaScript += 1
+                estadisticasLenguajes[unLenguaje] = javaScript
+            }
+            if( unLenguaje === "PHP"){
+                php += 1
+                estadisticasLenguajes[unLenguaje] = php
+            }
+            if( unLenguaje === "Ruby"){
+                ruby += 1
+                estadisticasLenguajes[unLenguaje] = ruby
+            }
+        }
+    }
+    return estadisticasLenguajes
+}
+console.log(obtenerEstadisticasLenguajes(empleados))
+  
+
+/*
+const obtenerEstadisticasLenguajes = () => {
+    const estadisticasLenguajes = {}
+    let acc = 0
+    for (const empleado of empleados){
+        const { lenguajes } = empleado;
+        console.log(lenguajes)
+        for (let i= 0; i < lenguajes.length; i ++ ){
+            if(lenguajes[i] === lenguajes[i]){
+acc +=1
+            }
+            estadisticasLenguajes[lenguajes[i]] = acc
+        }
+       
+    }
+    return estadisticasLenguajes
+}
+*/
