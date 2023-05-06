@@ -172,6 +172,30 @@ const subirDeCategoria = (empleados) => {
 console.log(subirDeCategoria(empleados[2]))
 // agregarTecnologias, que agregue a todos los objetos empleades la propiedad tecnologías,que es un array conteniendo los valores "GIT" y "Node.js"
 
+const agregarTecnologias2 = () => {
+    const tecnoAgregados = empleados.map(empleado => {
+        return {
+            ... empleado,
+            tecnologias: ["GIT" , "Node.js"]
+        }
+    })
+    return tecnoAgregados
+}
+console.log(agregarTecnologias2(empleados))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const agregarTecnologias = () =>{
     const agregandoTecnos = empleados.map(empleado =>{
         return {... empleado, tecnologias: ["GIT", "Node.js"]}
@@ -181,6 +205,14 @@ const agregarTecnologias = () =>{
 console.log(agregarTecnologias(empleados))
 
 // empleadeSabeLenguaje, que tome por parámetro un objeto empleade (elemento del array empleades) y un lenguaje y devuelva true si dicho empleade sabe dicho lenguaje
+
+// const empleadoSabeLenguaje2 = (unEmpleado, unLenguaje) => {
+//     const sabeLenguaje = unEmpleado.lenguajes.includes(unLenguaje)
+//     return sabeLenguaje
+// }
+// console.log(empleadoSabeLenguaje2(empleados[0], "Ruby"))
+
+
 const empleadoSabeLenguaje = (empleado, sabeLenguaje) =>{
     const sabe = empleado.lenguajes.some(lenguaje => lenguaje === sabeLenguaje)
     return sabe
@@ -199,7 +231,15 @@ const empleadoSabeLenguaje = (empleado, sabeLenguaje) =>{
 console.log(empleadoSabeLenguaje(empleados[1], "C#"))
 console.log(empleadoSabeLenguaje(empleados[2], "PHP"))
 */
+
+
+
 // empleadesQueSabenLenguaje, que tome por parámetro un lenguaje y devuelva todes les empleades que saben dicho lenguaje (usar la función anterior)
+const empleadoQueSabenLenguaje2 = (unLenguaje) => 
+    empleados.filter(empleado => empleadoSabeLenguaje(empleado, unLenguaje))
+console.log(empleadoQueSabenLenguaje2("Ruby"))
+
+
 /*
 const empleadoQueSabenLenguaje = (unLenguaje) =>{
     const empleadosFiltradosLenguaje = empleados.lenguajes.filter(lenguaje => empleadoSabeLenguaje(empleados[i],unLenguaje))
@@ -209,35 +249,93 @@ const empleadoQueSabenLenguaje = (unLenguaje) =>{
 console.log(empleadoQueSabenLenguaje("PHP"))
 */
 // empleadesQueSabenLenguajes, que tome por parámetro un array de lenguajes y devuelva un array con aquelles empleades que sepan todos esos lenguajes
+const empleadosQueSabenLenguajes2 = (arrayLenguajes) => {
+    let empleadoQueSabe = []
+    // let lenguajesTotales = []
+    for (const empleado of empleados){
+        for (const lenguaje of empleado.lenguajes){
+
+        }
+    }
+    return empleadoQueSabe
+}
+
+console.log(empleadosQueSabenLenguajes2(["Ruby", "C#", "Java", "Python", "PHP"]))
+
+const empleadosQueSabenLenguajes3 = (arrayLenguajes) => {
+    return empleados.filter(({ lenguajes })=> lenguajes.length >= arrayLenguajes.length);
+    if(arrayLenguajes.includes(lenguajes)){
+
+    }
+}
+console.log(empleadosQueSabenLenguajes3(["Ruby", "C#", "Java", "Python", "PHP"]))
+
+
+// const empleadesQueSabenLenguajes4 = (arrayLenguajes) => empleades.filter(empleade => {
+//     let acc = 0
+//     for (const lenguaje of arrayLenguajes) {
+//       if (empleade.lenguajes.includes(lenguaje)) {
+//         acc++
+//       }
+//     }
+//     if (acc === arrayLenguajes.length) {
+//       return true
+//     }
+// })
+
+// console.log(empleadesQueSabenLenguajes4(["Python", "Ruby", "Java", "C#"]))
+
+const empleadesQueSabenLenguajes5 = (arrayLenguajes) => empleados.filter(empleado =>
+    arrayLenguajes.every(lenguaje => empleado.lenguajes.includes(lenguaje))
+  );
+  
+  console.log(empleadesQueSabenLenguajes5(["Python", "Ruby", "Java", "C#"]));
+  
+
 const empleadosQueSabenLenguajes = (arrayLenguajes) => {
     let empleadosFiltradosLenguajes = []
     for (const empleado of empleados){
-        for (const lenguajes of arrayLenguajes){
-            if (empleadoSabeLenguaje(empleado, lenguajes)){
-                empleadosFiltradosLenguajes.push(empleado)
+        if(empleado.lenguajes.length >= arrayLenguajes.length){
+            for (const lenguaje of arrayLenguajes){
+                if (empleado.lenguajes.includes(lenguaje)){
+                    empleadosFiltradosLenguajes.push(empleado)
+                }
             }
         }
+        
     }
     return empleadosFiltradosLenguajes
 }
+console.log(empleadosQueSabenLenguajes(['Ruby', 'C#', 'Java', 'Python', 'PHP']))
 /*
 const empleadosQueSabenLenguajes = (arrayLenguajes) => {
     const filtrarEmpleados = empleados.includes(arrayLenguajes)
     return filtrarEmpleados
 }
 */
-console.log(empleadosQueSabenLenguajes(["C#"]))
+
 // empleadesQueSabenAlgunosLenguajes, que tome por parámetro un array de lenguajes y devuelva un array con aquelles empleades que sepan al menos uno de esos lenguajes
+const empleadosQueSabenAlgunosLenguajes = ( arrayLenguajes ) => 
+    empleados.filter( empleado => arrayLenguajes.some(lenguaje => empleado.lenguajes.includes(lenguaje)) )
+console.log(empleadosQueSabenAlgunosLenguajes(["Ruby", "JavaScript", "Python", "Java"]))
 
 // empleadesConMejorSueldo, que devuelva un array con los 10 mejores empleades pagos (investigar metodo sort)
-const empleadosMayorSueldoOrden = () => empleados.sort((a, b) => b.sueldo - a.sueldo)
-console.log(empleadosMayorSueldoOrden(empleados))
+
+const empleadosConMejorSueldo2 = () => 
+    empleados.toSorted((a,b) => b.sueldo - a.sueldo).slice(0, 10)
+
+console.log(empleadosConMejorSueldo2(empleados))
 
 
-const empleadesConMejorSueldo = () => empleadosMayorSueldoOrden(empleados).slice(0, 10)
+
+// const empleadosMayorSueldoOrden = () => empleados.sort((a, b) => b.sueldo - a.sueldo)
+// console.log(empleadosMayorSueldoOrden(empleados))
+
+
+// const empleadesConMejorSueldo = () => empleadosMayorSueldoOrden(empleados).slice(0, 10)
     
 
-console.log(empleadesConMejorSueldo(empleados))
+// console.log(empleadesConMejorSueldo(empleados))
 // obtenerTitulosCompletos, que devuelva un array donde cada elemento es un string con la forma "nombre, puesto seniority, area", p.ej.: "Nadia Conrad, Senior Backend Developer, Desarrollo", habiendo un elemento por cada empleade (usar map)
 const obtenerTitulosCompletos = () => {
     const titulosCompletos = empleados.map(({nombre, seniority, area}) =>  {
@@ -254,7 +352,10 @@ console.log(obtenerTitulosCompletos(empleados))
 // pais
 // edad habiendo un elemento por cada empleade, y donde cada propiedad se corresponde a la propiedad del objeto original (usar map)
 const obtenerInfoPersonal = () =>{
-    const infoPersonal = empleados.map(({nombre, pais, edad})=> {return {nombre, pais, edad}
+    const infoPersonal = empleados.map(({nombre, pais, edad})=> {
+        return {
+            nombre, pais, edad
+        }
 })
     return infoPersonal
 }
@@ -381,7 +482,7 @@ const obtenerEstadisticasLenguajes = () => {
     for (const empleado of empleados){
         const { lenguajes } = empleado;
         for (const unLenguaje of lenguajes){
-            console.log(unLenguaje)
+            //console.log(unLenguaje)
             if( unLenguaje === "C#"){
                 accC += 1
                 estadisticasLenguajes[unLenguaje] = accC
